@@ -1,0 +1,23 @@
+ <div class="wrapper">
+ <mat-expansion-panel hideToggle *ngFor = "let bill of bills">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+          <b>
+            {{bill.title}}
+          </b> 
+             ------- {{bill.sum| currency}}
+      </mat-panel-title>
+      <button mat-mini-fab color="primary"
+       (click)= "onDelete(bill)">
+        <mat-icon>delete </mat-icon>
+      </button>
+    </mat-expansion-panel-header>
+    <p>{{bill.startDate | date}} - {{bill.endDate | date}} </p>
+    <p>Payment method: {{bill.payment}}</p>
+    <li role= "presentation"> <a [routerLink] = "['/header/bill-edit', bill.id]" > Edit info </a></li>
+    </mat-expansion-panel>
+<br>
+<button mat-raised-button color="primary" (click)= "navigateToAddNewBill()">
+Add new bill</button>
+<h2> Total outcomes: {{sum| currency}}</h2>
+</div>
