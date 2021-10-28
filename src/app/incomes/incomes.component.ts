@@ -1,19 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { DataStorageService } from '../data-storage.service';
 import { Income } from '../income.interface';
 
 @Component({
   selector: 'app-incomes',
   templateUrl: './incomes.component.html',
-  styleUrls: ['./incomes.component.css']
+  styleUrls: ['./incomes.component.scss']
 })
-export class IncomesComponent implements OnInit {
+export class IncomesComponent implements OnInit, OnDestroy {
+  title: string ='';
   form= new FormGroup ({});
   incomes:Income[] =[];
   newIncome: Income = {title: '', sum:0};
   totalIncomes: number = 0;
+  subscription: Subscription | null = null;
 
-  constructor() { }
+  constructor(private dataStorageService: DataStorageService) { }
 
   ngOnInit(): void {
     this.form = new FormGroup ({
@@ -29,14 +33,18 @@ export class IncomesComponent implements OnInit {
     this.incomes.push(this.newIncome); 
     this.form.reset();
     this.totalIncomes += (incomeSum);
-    console.log(this.totalIncomes);
-     
+    this.subscription= this.dataStorageService.storeBills().subscribe ((response) =>
+    console.log(response)
+    );     
   }
   onDelete(income: Income) {
     this.incomes = this.incomes.filter(item => item !== income);
     this.totalIncomes = this.totalIncomes- this.newIncome.sum;  
-
-
+    this.subscription= this.dataStorageService.storeBills().subscribe ((response) =>
+    console.log(response)
+    );
   }
-
+  ngOnDestroy () {
+    this.subscription?.unsubscribe();
+  }
 }

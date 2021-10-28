@@ -4,5 +4,5 @@ export interface Bill {
     startDate: Date;
     endDate: Date;
     sum: number;
-    payment: string
+    payment?: string
 }

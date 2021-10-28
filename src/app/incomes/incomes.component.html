@@ -1,61 +1,66 @@
-<h4> Incomes:  </h4>
-<form [formGroup]= "form" (ngSubmit)="onSubmit()">
-<mat-form-field appearance="fill"  >
-    <mat-label>Title</mat-label>
-        <input formControlName= "title" matInput>
+<div class="wrapper">
+    <h2 *ngIf= "title"> {{title}} : </h2>
+    <br>
+    <form [formGroup]= "form" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill"  >
+        <mat-label>Title</mat-label>
+            <input formControlName= "title" matInput [(ngModel)] = "title">
+            <small
+            class="error"
+            *ngIf="
+            !form.controls['title'].valid &&
+            form.controls['title'].touched &&
+            form.controls['title'].hasError('required')
+            ">
+            title is required
+        </small>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+            <mat-label>Sum</mat-label>
+            <input matInput formControlName= "sum">
+            <small
+            class="error"
+            *ngIf="
+            !form.controls['sum'].valid &&
+            form.controls['sum'].touched &&
+            form.controls['sum'].hasError('required')
+            ">
+            sum is required
+        </small>
         <small
         class="error"
         *ngIf="
-          !form.controls['title'].valid &&
-          form.controls['title'].touched &&
-          form.controls['title'].hasError('required')
+            !form.controls['sum'].valid &&
+            form.controls['sum'].touched &&
+            form.controls['sum'].hasError('pattern')
         ">
-        title is required
-      </small>
-    </mat-form-field>
+        sum is a numner
+        </small>
+        </mat-form-field>
+        <br>
+    </form>
+    <button mat-raised-button color="primary"
+    type= "submit"
+    (click)= "onSubmit()">
+    Add income</button>
     <br>
-    <mat-form-field appearance="fill">
-        <mat-label>Sum</mat-label>
-        <input matInput formControlName= "sum">
-        <small
-        class="error"
-        *ngIf="
-          !form.controls['sum'].valid &&
-          form.controls['sum'].touched &&
-          form.controls['sum'].hasError('required')
-        ">
-        sum is required
-      </small>
-      <small
-      class="error"
-      *ngIf="
-        !form.controls['sum'].valid &&
-        form.controls['sum'].touched &&
-        form.controls['sum'].hasError('pattern')
-      ">
-      sum is a numner
-    </small>
-    </mat-form-field>
+    <h2 *ngIf="incomes.length>0"> Your incomes:</h2>
     <br>
-</form>
-<button mat-raised-button color="primary"
-type= "submit"
-(click)= "onSubmit()">
-Add income</button>
+    <mat-expansion-panel hideToggle *ngFor = "let income of incomes">
+        <mat-expansion-panel-header>
+        <mat-panel-title>
+            <b>
+                {{income.title}}
+            </b> 
+                ------- {{income.sum| currency}}
+        </mat-panel-title>
+        <button mat-mini-fab color="primary"
+        (click)= "onDelete(income)">
+            <mat-icon>delete </mat-icon>
+        </button>
+        </mat-expansion-panel-header>
+        </mat-expansion-panel>
 
-<mat-expansion-panel hideToggle *ngFor = "let income of incomes">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-          <b>
-            {{income.title}}
-          </b> 
-             ------- {{income.sum| currency}}
-      </mat-panel-title>
-      <button mat-mini-fab color="primary"
-       (click)= "onDelete(income)">
-        <mat-icon>delete </mat-icon>
-      </button>
-    </mat-expansion-panel-header>
-    </mat-expansion-panel>
-
-     <p> Total incomes - {{totalIncomes| currency}} </p>
+        <p> Total incomes - {{totalIncomes| currency}} </p>
+</div>

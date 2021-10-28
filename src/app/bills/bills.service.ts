@@ -1,6 +1,5 @@
-import { summaryFileName } from "@angular/compiler/src/aot/util";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Subject } from "rxjs";
+import { BehaviorSubject } from "rxjs";
 import { Bill } from "../bill.interface";
 
 @Injectable ({providedIn: 'root'})
@@ -80,6 +79,10 @@ export class billsService {
    addBill (bill: Bill) {
        this.bills.push(bill);
        this.billsChanged$.next(this.bills.slice());
+   }
+   setBills (bills: Bill[]) {
+       this.bills= bills;
+       this.billsChanged$.next(this.bills);
    }
 
    returnSum () {

@@ -1,21 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { throwToolbarMixedModesError } from '@angular/material/toolbar';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Bill } from '../bill.interface';
 import { billsService } from '../bills/bills.service';
+import { DataStorageService } from '../data-storage.service';
 
 @Component({
   selector: 'app-new-bill',
   templateUrl: './new-bill.component.html',
-  styleUrls: ['./new-bill.component.css']
+  styleUrls: ['./new-bill.component.scss']
 })
-export class NewBillComponent implements OnInit {
+export class NewBillComponent implements OnInit, OnDestroy {
+  title: string ='';
   form= new FormGroup ({});
   bills: Bill[] |undefined;
   id: number= 0;
+  subscription: Subscription |null =null;
+
   constructor( private billsService: billsService,
-                private router: Router) { }
+                private router: Router,
+                private dataStorageService: DataStorageService) { }
 
   ngOnInit(): void {
     this.form = new FormGroup ({
@@ -39,8 +45,14 @@ export class NewBillComponent implements OnInit {
     let endDate= this.form.value.endDate;
     let payment= this.form.value.payment;
     const newBill: Bill = {id, title, sum, startDate,endDate, payment};
-
+    this.dataStorageService.storeBills().subscribe ((response) =>
+    console.log(response)
+    );
     this.billsService.addBill(newBill);
     this.router.navigate(['/header/bills'])    
+  }
+
+  ngOnDestroy () {
+    this.subscription?.unsubscribe();
   }
 }
