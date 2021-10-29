@@ -59,11 +59,12 @@
         <mat-option value="yearly">yearly</mat-option>
         </mat-select>
     </mat-form-field>
-    </form>
+    <br>
     <button mat-raised-button color="primary"
-type= "submit" 
-(click)= "onSubmit()">
+    type= "submit" 
+    [disabled]= !this.form.valid>
     Update</button>
+</form>
 </div>
     
 

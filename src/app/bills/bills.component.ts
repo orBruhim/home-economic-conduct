@@ -19,12 +19,16 @@ export class BillsComponent implements OnInit, OnDestroy{
               private router: Router,
               private dataStorageService: DataStorageService) {}
 
-  ngOnInit(): void {
-    this.bills= this.billsService.getBills(); 
-    this.billsService.billsChanged$.subscribe((bills: Bill[]) => {
-      this.bills= bills.slice();
-      }); 
-    this.sum= this.billsService.returnSum();   
+  ngOnInit() {
+    this.bills = this.billsService.getBills();
+    this.subscription= this.billsService.billsChanged$
+    .subscribe (
+      (bills: Bill[]) => {
+      this.bills = bills;
+      this.sum= this.billsService.returnSum(); 
+    }
+    );
+      
   }
 
   onDelete(bill:Bill) {
@@ -43,5 +47,4 @@ navigateToAddNewBill() {
   ngOnDestroy() {
     this.subscription?.unsubscribe();
   }
-
 }

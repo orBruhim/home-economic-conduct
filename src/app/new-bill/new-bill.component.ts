@@ -31,7 +31,7 @@ export class NewBillComponent implements OnInit, OnDestroy {
       endDate: new FormControl ('', Validators.required),
       payment: new FormControl ('', Validators.required)
     });
-    this.billsService.billsChanged$.subscribe((bills: Bill[]) => {
+    this.subscription= this.billsService.billsChanged$.subscribe((bills: Bill[]) => {
       this.bills=bills;
       this.id= this.bills.length;
       
@@ -40,15 +40,18 @@ export class NewBillComponent implements OnInit, OnDestroy {
   onSubmit () {
     let id= this.id +1;
     let title= this.form.value.title;
-    let sum= this.form.value.sum;
+    let sum= +this.form.value.sum;
     let startDate= this.form.value.startDate;
     let endDate= this.form.value.endDate;
     let payment= this.form.value.payment;
     const newBill: Bill = {id, title, sum, startDate,endDate, payment};
+   
+    this.billsService.addBill(newBill);
+    this.billsService.billsChanged$.subscribe ((bills: Bill[]) => 
+      this.bills= bills);
     this.dataStorageService.storeBills().subscribe ((response) =>
     console.log(response)
     );
-    this.billsService.addBill(newBill);
     this.router.navigate(['/header/bills'])    
   }
 

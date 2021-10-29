@@ -1,8 +1,8 @@
 export interface Bill {
     id: number;
     title: string;
-    startDate: Date;
-    endDate: Date;
+    startDate: Date | string;
+    endDate: Date |string;
     sum: number;
     payment?: string
 }

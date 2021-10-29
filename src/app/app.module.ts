@@ -22,11 +22,15 @@ import { IncomesModule } from './incomes/incomes.module';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { SummaryComponent } from './summary/summary.component';
 import { SummaryModule } from './summary/summary.module';
+import { ChartsModule } from 'ng2-charts';
+import { AuthComponent } from './auth/auth.component';
+import { AuthModule } from './auth/auth.module';
+
 
 
 @NgModule({
   declarations: [
-    AppComponent,    
+    AppComponent    
   ],
   imports: [
     BrowserModule,
@@ -36,13 +40,15 @@ import { SummaryModule } from './summary/summary.module';
     
     MatToolbarModule,
     ReactiveFormsModule,
+    ChartsModule,
 
     NewBillModule,
     BillsModule,
     BillEditModule,
     HeaderModule,
     IncomesModule,
-    SummaryModule
+    SummaryModule,
+    AuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]

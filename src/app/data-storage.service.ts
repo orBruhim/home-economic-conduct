@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { billsService } from './bills/bills.service';
-import {tap} from 'rxjs/operators';
+import {tap, map} from 'rxjs/operators';
 import { Bill } from './bill.interface';
 
 
@@ -16,17 +16,26 @@ export class DataStorageService {
   
   storeBills() {
   const bills = this.billsService.getBills();
-       return this.http.post ('https://the-frontend-booster-default-rtdb.firebaseio.com/posts.json', bills);
+       return this.http.put ('https://home-economic--conduct-default-rtdb.firebaseio.com/bills.json', bills);
   }
-  // fetchBills () {
-  //   return this.http.get <Bill[]> 
-  //   ('https://the-frontend-booster-default-rtdb.firebaseio.com/posts.json')
-  //   .pipe(
-  //     tap (bills => {
-  //       this.billsService.setBills(bills);
-  //       console.log(bills);
-        
-  //     })
-  //   );
-  // }
+  fetchBills () {
+    return this.http.get <Bill[]>
+    ('https://home-economic--conduct-default-rtdb.firebaseio.com/bills.json', ).pipe(
+    tap(bills => {
+       this.billsService.setBills(bills);
+       console.log(bills);
+   }));
+  }
+  // storeIncomes() {
+  //   const bills = this.billsService.getBills();
+  //        return this.http.put ('https://home-economic--conduct-default-rtdb.firebaseio.com/bills.json', bills);
+  //   }
+  //   fetchBills () {
+  //     return this.http.get <Bill[]>
+  //     ('https://home-economic--conduct-default-rtdb.firebaseio.com/bills.json', ).pipe(
+  //     tap(bills => {
+  //        this.billsService.setBills(bills);
+  //        console.log(bills);
+  //    }));
+  //   }
 }

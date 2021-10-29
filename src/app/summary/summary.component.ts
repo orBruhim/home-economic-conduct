@@ -23,7 +23,5 @@ export class SummaryComponent implements OnInit {
     monkeyPatchChartJsTooltip();
     monkeyPatchChartJsLegend();
   }
-
-  ngOnInit() {
-  }
+ngOnInit() {}
 }

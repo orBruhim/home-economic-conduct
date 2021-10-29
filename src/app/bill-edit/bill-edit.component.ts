@@ -19,6 +19,7 @@ export class BillEditComponent implements OnInit, OnDestroy {
   form: FormGroup = new FormGroup ({})
   newBill : Bill ={id:0, title: '', startDate: new Date (2021,11,30), endDate:new Date (2021,11,30), sum:0, payment:''}
   subscription: Subscription | null = null;
+  date: string ='';
 
   constructor(private route: ActivatedRoute,
               private billsService: billsService,
@@ -26,10 +27,16 @@ export class BillEditComponent implements OnInit, OnDestroy {
               private dataStorageService: DataStorageService) { }
 
   ngOnInit(): void {
-    this.route.params.subscribe ((params: Params) => 
-    this.id= +params['id']);
+   this.id = +this.route.snapshot.params.id;
+    this.subscription= this.route.params
+    .subscribe(
+      (params: Params) => {
+        this.id = +params.id;
+      this.bill= this.billsService.getBill(this.id);        
+    }
+    );
+
     
-    this.bill= this.billsService.getBill(this.id);
     this.form = new FormGroup ({
       title: new FormControl (this.bill.title, Validators.required),
       sum: new FormControl (this.bill.sum, [Validators.required, Validators.pattern("^[0-9]*$")]),
@@ -38,19 +45,22 @@ export class BillEditComponent implements OnInit, OnDestroy {
       payment: new FormControl (this.bill.payment, Validators.required)
        
     });
+    // console.log(this.form.value.startDate);
     
   }
   onSubmit () {
     this.newBill.title= this.form.value.title;
     this.newBill.startDate= this.form.value.startDate;
     this.newBill.endDate= this.form.value.endDate;
-    this.newBill.sum= this.form.value.sum;
+    this.newBill.sum= +this.form.value.sum;
     this.newBill.payment= this.form.value.payment;
-    this.billsService.setBill (this.id, this.newBill);
+    this.newBill.id= this.id;
+    this.billsService.setBill (this.id, this.newBill);    
     this.dataStorageService.storeBills().subscribe ((response) =>
     console.log(response)
     );
-    this.router.navigate(['/header/bills']);
+    this.router.navigate(['/header/bills']);  
+
   }
   ngOnDestroy () {
     this.subscription?.unsubscribe();

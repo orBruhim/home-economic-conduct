@@ -1,68 +1,69 @@
 <div class= "wrapper">
-<h2 *ngIf = "title">{{title}} : </h2>
-<br>
-<form [formGroup]= "form" (ngSubmit)="onSubmit()">
-<mat-form-field appearance="fill"  >
-    <mat-label>Title</mat-label>
-        <input formControlName= "title" matInput [(ngModel)] = "title">
-        <small
-        class="error"
-        *ngIf="
-          !form.controls['title'].valid &&
-          form.controls['title'].touched &&
-          form.controls['title'].hasError('required')
-        ">
-        title is required
-      </small>
-    </mat-form-field>
+    <h2 *ngIf = "title">{{title}} : </h2>
     <br>
-    <mat-form-field appearance="fill">
-        <mat-label>Sum</mat-label>
-        <input matInput formControlName= "sum">
-        <small
-        class="error"
-        *ngIf="
-          !form.controls['sum'].valid &&
-          form.controls['sum'].touched &&
-          form.controls['sum'].hasError('required')
-        ">
-        sum is required
-      </small>
-      <small
-      class="error"
-      *ngIf="
-        !form.controls['sum'].valid &&
-        form.controls['sum'].touched &&
-        form.controls['sum'].hasError('pattern')
-      ">
-      sum is a numner
-    </small>
-    </mat-form-field>
-    <br>
-    <mat-form-field appearance="fill">
-        <mat-label>start date</mat-label>
-        <input matInput formControlName= "startDate" type= "date">
-    </mat-form-field>
-    <br>
-    <mat-form-field appearance="fill">
-        <mat-label>End date</mat-label>
-        <input matInput formControlName= "endDate" type= "date">
-    </mat-form-field>
-    <br>
-    <mat-form-field appearance="fill">
-        <mat-label>Payment</mat-label>
-     <mat-select formControlName= "payment">
-      <mat-option value="monthly">monthly</mat-option>
-      <mat-option value="weekly">weekly</mat-option>
-      <mat-option value="bi-monthly">bi-monthly</mat-option>
-      <mat-option value="yearly">yearly</mat-option>
-    </mat-select>
-  </mat-form-field>
-</form>
-<button mat-raised-button color="primary"
-type= "submit"
-(click)= "onSubmit()">
-Add bill</button>
+    <form [formGroup]= "form" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill"  >
+            <mat-label>Title</mat-label>
+            <input formControlName= "title" matInput [(ngModel)] = "title">
+            <small
+            class="error"
+            *ngIf="
+            !form.controls['title'].valid &&
+            form.controls['title'].touched &&
+            form.controls['title'].hasError('required')
+            ">
+            title is required
+            </small>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+            <mat-label>Sum</mat-label>
+            <input matInput formControlName= "sum">
+            <small
+            class="error"
+            *ngIf="
+            !form.controls['sum'].valid &&
+            form.controls['sum'].touched &&
+            form.controls['sum'].hasError('required')
+            ">
+            sum is required
+            </small>
+            <small
+            class="error"
+            *ngIf="
+            !form.controls['sum'].valid &&
+            form.controls['sum'].touched &&
+            form.controls['sum'].hasError('pattern')
+            ">
+            sum is a numner
+            </small>
+        </mat-form-field>
+            <br>
+        <mat-form-field appearance="fill">
+            <mat-label>start date</mat-label>
+            <input matInput formControlName= "startDate" type= "date">
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+            <mat-label>End date</mat-label>
+            <input matInput formControlName= "endDate" type= "date">
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+            <mat-label>Payment</mat-label>
+            <mat-select formControlName= "payment">
+            <mat-option value="monthly">monthly</mat-option>
+            <mat-option value="weekly">weekly</mat-option>
+            <mat-option value="bi-monthly">bi-monthly</mat-option>
+            <mat-option value="yearly">yearly</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <br>
+        <button mat-raised-button color="primary"
+        type= "submit"
+        [disabled]= !this.form.valid>
+        Add bill</button>
+    </form>
 </div>
     
 

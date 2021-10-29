@@ -6,6 +6,9 @@ import { NotFoundComponent } from './not-found/not-found.component';
 
 const appRoutes: Routes = [
     { path: '', redirectTo: 'header/bills', pathMatch: 'full' },
+    { path: 'auth', loadChildren:() => import (
+        './auth/auth.module'
+    ).then (m => m.AuthModule) },
     { path: 'header', component: HeaderComponent, children: [
         { path: 'incomes', loadChildren: () => import (
             './incomes/incomes.module'

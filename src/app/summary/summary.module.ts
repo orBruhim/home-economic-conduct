@@ -6,6 +6,13 @@ import { SummaryRoutingModule } from './summary-routing.module';
 import { ChartsModule } from 'ng2-charts';
 import { FormsModule } from '@angular/forms';
 
+import { 
+	IgxPieChartModule,
+	IgxLegendModule,
+	IgxItemLegendModule
+ } from "igniteui-angular-charts";
+
+
 
 
 
@@ -14,8 +21,12 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     SummaryRoutingModule,
-    ChartsModule,
-    FormsModule
+    FormsModule,
+    IgxPieChartModule,
+    IgxLegendModule,
+    IgxItemLegendModule,
+    ChartsModule
+
   ]
 })
 export class SummaryModule { }
