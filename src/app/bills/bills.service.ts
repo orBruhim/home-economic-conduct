@@ -4,7 +4,7 @@ import { Bill } from "../bill.interface";
 
 @Injectable ({providedIn: 'root'})
 
-export class billsService {
+export class BillsService {
   bills: Bill[] = [];
 //     {id: 0,
 //     title: 'Municipal rate',
@@ -91,6 +91,19 @@ export class billsService {
      for(let i = 0; i < this.bills.length; i++)
      this.sum =this.sum + this.bills[i].sum;
      return this.sum;     
-     
    }
+
+   returnSums() {
+       const sumsArray = [];
+       for(let i = 0; i < this.bills.length; i++)
+       sumsArray[i]= this.bills[i].sum;
+       return sumsArray;
+   }
+   returnTitles() {
+    const titleArray = [];
+    for(let i = 0; i < this.bills.length; i++) {
+        titleArray[i]= this.bills[i].title;
+    }
+    return titleArray;
+}
 }

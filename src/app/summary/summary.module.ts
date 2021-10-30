@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { SummaryRoutingModule } from './summary-routing.module';
@@ -11,13 +11,10 @@ import {
 	IgxLegendModule,
 	IgxItemLegendModule
  } from "igniteui-angular-charts";
-
-
-
-
-
+import { SummaryComponent } from './summary.component';
+ 
 @NgModule({
-  declarations: [],
+  declarations: [SummaryComponent],
   imports: [
     CommonModule,
     SummaryRoutingModule,
@@ -27,6 +24,8 @@ import {
     IgxItemLegendModule,
     ChartsModule
 
-  ]
+  ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+
 })
 export class SummaryModule { }

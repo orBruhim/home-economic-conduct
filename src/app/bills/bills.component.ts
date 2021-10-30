@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Bill } from '../bill.interface';
 import { DataStorageService } from '../data-storage.service';
-import { billsService } from './bills.service';
+import { BillsService } from './bills.service';
 
 @Component({
   selector: 'app-bills',
@@ -15,7 +15,7 @@ export class BillsComponent implements OnInit, OnDestroy{
   bills: Bill[] =[];
   sum =0;
   subscription: Subscription | null = null;
-  constructor(private billsService: billsService,
+  constructor(private billsService: BillsService,
               private router: Router,
               private dataStorageService: DataStorageService) {}
 
@@ -35,9 +35,7 @@ export class BillsComponent implements OnInit, OnDestroy{
     this.billsService.deleteBill(bill);
     this.subscription = this.billsService.billsChanged$.subscribe ((bills: Bill[]) => 
       this.bills= bills);
-    this.subscription= this.dataStorageService.storeBills().subscribe ((response) =>
-    console.log(response)
-    );
+    this.subscription= this.dataStorageService.storeBills().subscribe ();
 
 }
 navigateToAddNewBill() {

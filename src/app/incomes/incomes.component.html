@@ -35,14 +35,15 @@
             form.controls['sum'].touched &&
             form.controls['sum'].hasError('pattern')
         ">
-        sum is a numner
+        sum is a number
         </small>
         </mat-form-field>
         <br>
     </form>
     <button mat-raised-button color="primary"
     type= "submit"
-    (click)= "onSubmit()">
+    (click)= "onSubmit()"
+    [disabled]= !this.form.valid>
     Add income</button>
     <br>
     <h2 *ngIf="incomes.length>0"> Your incomes:</h2>
@@ -53,7 +54,7 @@
             <b>
                 {{income.title}}
             </b> 
-                ------- {{income.sum| currency}}
+                -{{income.sum| currency}}
         </mat-panel-title>
         <button mat-mini-fab color="primary"
         (click)= "onDelete(income)">

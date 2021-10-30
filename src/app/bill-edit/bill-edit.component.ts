@@ -4,7 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Bill } from '../bill.interface';
-import { billsService } from '../bills/bills.service';
+import { BillsService } from '../bills/bills.service';
 import { DataStorageService } from '../data-storage.service';
 
 @Component({
@@ -22,7 +22,7 @@ export class BillEditComponent implements OnInit, OnDestroy {
   date: string ='';
 
   constructor(private route: ActivatedRoute,
-              private billsService: billsService,
+              private billsService: BillsService,
               private router: Router,
               private dataStorageService: DataStorageService) { }
 
@@ -43,10 +43,11 @@ export class BillEditComponent implements OnInit, OnDestroy {
       startDate: new FormControl (this.bill.startDate, Validators.required),
       endDate: new FormControl (this.bill.endDate, Validators.required),
       payment: new FormControl (this.bill.payment, Validators.required)
-       
-    });
-    // console.log(this.form.value.startDate);
-    
+  }
+  // , this.startDateCannotBeLessThanEndDateValidator(this.form)
+  );   
+
+  
   }
   onSubmit () {
     this.newBill.title= this.form.value.title;
@@ -56,13 +57,25 @@ export class BillEditComponent implements OnInit, OnDestroy {
     this.newBill.payment= this.form.value.payment;
     this.newBill.id= this.id;
     this.billsService.setBill (this.id, this.newBill);    
-    this.dataStorageService.storeBills().subscribe ((response) =>
-    console.log(response)
-    );
+    this.dataStorageService.storeBills().subscribe ();
     this.router.navigate(['/header/bills']);  
 
   }
   ngOnDestroy () {
     this.subscription?.unsubscribe();
   }
+
+//   startDateCannotBeLessThanEndDateValidator(formGroup: FormGroup) {
+//     let startDate = formGroup.get("startDate");   
+//     let endDate = formGroup.get("endDate");
+//     if(endDate!= null && startDate!= null && endDate >= startDate ) {
+//       console.log('goood');
+//       return null;
+      
+//     }
+//     else
+//     console.log(endDate, startDate)
+//     console.log('bad');
+//     return null;
+// }
 }

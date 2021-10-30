@@ -11,10 +11,8 @@ export class HeaderComponent implements OnInit {
   constructor(private dataStorageService: DataStorageService) { }
 
   ngOnInit() {
-    this.dataStorageService.fetchBills().subscribe(posts =>{
-      console.log(posts);
-      
-    });
+    this.dataStorageService.fetchBills().subscribe();
+    this.dataStorageService.fetchIncomes().subscribe();
   }
 
   }

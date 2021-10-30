@@ -4,7 +4,7 @@ import { throwToolbarMixedModesError } from '@angular/material/toolbar';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Bill } from '../bill.interface';
-import { billsService } from '../bills/bills.service';
+import { BillsService } from '../bills/bills.service';
 import { DataStorageService } from '../data-storage.service';
 
 @Component({
@@ -19,7 +19,7 @@ export class NewBillComponent implements OnInit, OnDestroy {
   id: number= 0;
   subscription: Subscription |null =null;
 
-  constructor( private billsService: billsService,
+  constructor( private billsService: BillsService,
                 private router: Router,
                 private dataStorageService: DataStorageService) { }
 
