@@ -9,11 +9,16 @@ import { FormsModule } from '@angular/forms';
 import { 
 	IgxPieChartModule,
 	IgxLegendModule,
-	IgxItemLegendModule
+	IgxItemLegendModule,
+  
  } from "igniteui-angular-charts";
 import { SummaryComponent } from './summary.component';
+
+
  
 @NgModule({
+  
+
   declarations: [SummaryComponent],
   imports: [
     CommonModule,

@@ -45,4 +45,10 @@ export class IncomeService {
     }
     return titleArray;
   }
+  returnSum () {
+    this.sum=0;
+     for(let i = 0; i < this.incomes.length; i++)
+     this.sum = this.sum + this.incomes[i].sum;
+     return this.sum;   
+}
 }

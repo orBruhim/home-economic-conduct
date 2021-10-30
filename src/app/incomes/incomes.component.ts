@@ -29,12 +29,14 @@ export class IncomesComponent implements OnInit, OnDestroy {
     this.incomes= this.incomeService.getIncomes();
     this.incomeService.incomeChanged$.subscribe ((incomes: Income[]) => {
       this.incomes= incomes;
+      this.totalIncomes = this.incomeService.returnSum();    
+
     });
+
   }
   onSubmit() {
-    console.log(this.form);
     let incomeTitle: string = this.form.value.title;
-    let incomeSum: number = this.form.value.sum;
+    let incomeSum: number = +this.form.value.sum;
     this.newIncome = {title: incomeTitle,sum: incomeSum};
     this.incomeService.addIncome(this.newIncome);
     this.subscription= this.incomeService.incomeChanged$.subscribe ((incomes: Income[]) => {
@@ -42,7 +44,6 @@ export class IncomesComponent implements OnInit, OnDestroy {
     });
     this.subscription= this.dataStorageService.storeIncomes().subscribe ();
     this.form.reset();
-    this.totalIncomes += (incomeSum);    
   }
   onDelete(income: Income) {
     this.incomeService.deleteIncome(income);
@@ -50,7 +51,7 @@ export class IncomesComponent implements OnInit, OnDestroy {
       this.incomes= incomes;
     });
     this.subscription= this.dataStorageService.storeIncomes().subscribe ();
-    this.totalIncomes = this.totalIncomes- this.newIncome.sum;  
+    // this.totalIncomes = this.totalIncomes- this.newIncome.sum;  
   }
   ngOnDestroy () {
     this.subscription?.unsubscribe();
