@@ -1,34 +1,22 @@
-<div class= "wrapper">
-    <h2> Your Bills Summary</h2>
-    <div style="display: block;">
-        <canvas baseChart 
-          [data]="pieChartDataBills" 
-          [labels]="pieChartLabelsBills" 
-          [chartType]="pieChartType"
-          [options]="pieChartOptions"
-          [plugins]="pieChartPlugins"
-          [legend]="pieChartLegend">
-        </canvas>
-      </div>
+<div class="wrapper">
+  <h2> Your Bills Summary</h2>
+  <div style="display: block;">
+    <canvas baseChart [data]="pieChartDataBills" [labels]="pieChartLabelsBills" [chartType]="pieChartType"
+      [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend">
+    </canvas>
+  </div>
 </div>
-<div class= "wrapper">
-    <h2> Your Incomes Summary</h2>
-    <div style="display: block;">
-        <canvas baseChart 
-          [data]="pieChartDataIncomes" 
-          [labels]="pieChartLabelsIncomes" 
-          [chartType]="pieChartType"
-          [options]="pieChartOptions"
-          [plugins]="pieChartPlugins"
-          [legend]="pieChartLegend">
-        </canvas>
-      </div>
+<div class="wrapper">
+  <h2> Your Incomes Summary</h2>
+  <div style="display: block;">
+    <canvas baseChart [data]="pieChartDataIncomes" [labels]="pieChartLabelsIncomes" [chartType]="pieChartType"
+      [options]="pieChartOptions" [plugins]="pieChartPlugins" [legend]="pieChartLegend">
+    </canvas>
+  </div>
 </div>
-<div class= "wrapper">
-    <h2> Incomes Vs. Bills</h2>
-    <div style="display: block; width: 400px">
-        <canvas id="canvas" height="220">{{ chart }}</canvas>
-      </div>
+<div class="wrapper">
+  <h2> Incomes Vs. Bills</h2>
+  <div style="display: block; width: 400px">
+    <canvas id="canvas" height="220">{{ chart }}</canvas>
+  </div>
 </div>
-  
-  

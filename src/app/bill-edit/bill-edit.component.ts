@@ -13,69 +13,69 @@ import { DataStorageService } from '../data-storage.service';
   styleUrls: ['./bill-edit.component.scss']
 })
 export class BillEditComponent implements OnInit, OnDestroy {
-  bill: Bill = {id:0, title: '', startDate: new Date (2021,11,30), endDate:new Date (2021,11,30), sum:0, payment:''};
-  id : number = 0;
-  bills: Bill[]| null = null;
-  form: FormGroup = new FormGroup ({})
-  newBill : Bill ={id:0, title: '', startDate: new Date (2021,11,30), endDate:new Date (2021,11,30), sum:0, payment:''}
+  bill: Bill = { id: 0, title: '', startDate: new Date(2021, 11, 30), endDate: new Date(2021, 11, 30), sum: 0, payment: '' };
+  id: number = 0;
+  bills: Bill[] | null = null;
+  form: FormGroup = new FormGroup({})
+  newBill: Bill = { id: 0, title: '', startDate: new Date(2021, 11, 30), endDate: new Date(2021, 11, 30), sum: 0, payment: '' }
   subscription: Subscription | null = null;
-  date: string ='';
+  date: string = '';
 
   constructor(private route: ActivatedRoute,
-              private billsService: BillsService,
-              private router: Router,
-              private dataStorageService: DataStorageService) { }
+    private billsService: BillsService,
+    private router: Router,
+    private dataStorageService: DataStorageService) { }
 
   ngOnInit(): void {
-   this.id = +this.route.snapshot.params.id;
-    this.subscription= this.route.params
-    .subscribe(
-      (params: Params) => {
-        this.id = +params.id;
-      this.bill= this.billsService.getBill(this.id);        
+    this.id = +this.route.snapshot.params.id;
+    this.subscription = this.route.params
+      .subscribe(
+        (params: Params) => {
+          this.id = +params.id;
+          this.bill = this.billsService.getBill(this.id);
+        }
+      );
+
+
+    this.form = new FormGroup({
+      title: new FormControl(this.bill.title, Validators.required),
+      sum: new FormControl(this.bill.sum, [Validators.required, Validators.pattern("^[0-9]*$")]),
+      startDate: new FormControl(this.bill.startDate, Validators.required),
+      endDate: new FormControl(this.bill.endDate, Validators.required),
+      payment: new FormControl(this.bill.payment, Validators.required)
     }
+      // , this.startDateCannotBeLessThanEndDateValidator(this.form)
     );
 
-    
-    this.form = new FormGroup ({
-      title: new FormControl (this.bill.title, Validators.required),
-      sum: new FormControl (this.bill.sum, [Validators.required, Validators.pattern("^[0-9]*$")]),
-      startDate: new FormControl (this.bill.startDate, Validators.required),
-      endDate: new FormControl (this.bill.endDate, Validators.required),
-      payment: new FormControl (this.bill.payment, Validators.required)
-  }
-  // , this.startDateCannotBeLessThanEndDateValidator(this.form)
-  );   
-
-  
-  }
-  onSubmit () {
-    this.newBill.title= this.form.value.title;
-    this.newBill.startDate= this.form.value.startDate;
-    this.newBill.endDate= this.form.value.endDate;
-    this.newBill.sum= +this.form.value.sum;
-    this.newBill.payment= this.form.value.payment;
-    this.newBill.id= this.id;
-    this.billsService.setBill (this.id, this.newBill);    
-    this.dataStorageService.storeBills().subscribe ();
-    this.router.navigate(['/header/bills']);  
 
   }
-  ngOnDestroy () {
+  onSubmit() {
+    this.newBill.title = this.form.value.title;
+    this.newBill.startDate = this.form.value.startDate;
+    this.newBill.endDate = this.form.value.endDate;
+    this.newBill.sum = +this.form.value.sum;
+    this.newBill.payment = this.form.value.payment;
+    this.newBill.id = this.id;
+    this.billsService.setBill(this.id, this.newBill);
+    this.dataStorageService.storeBills().subscribe();
+    this.router.navigate(['/bills']);
+
+  }
+  ngOnDestroy() {
     this.subscription?.unsubscribe();
   }
 
-//   startDateCannotBeLessThanEndDateValidator(formGroup: FormGroup) {
-//     let startDate = formGroup.get("startDate");   
-//     let endDate = formGroup.get("endDate");
-//     if(endDate!= null && startDate!= null && endDate >= startDate ) {
-//       console.log('goood');
-//       return null;
-      
-//     }
-//     else
-//     console.log(endDate, startDate)
-//     console.log('bad');
-//     return null;
-// }
+  //   startDateCannotBeLessThanEndDateValidator(formGroup: FormGroup) {
+  //     let startDate = formGroup.get("startDate");   
+  //     let endDate = formGroup.get("endDate");
+  //     if(endDate!= null && startDate!= null && endDate >= startDate ) {
+  //       console.log('goood');
+  //       return null;
+
+  //     }
+  //     else
+  //     console.log(endDate, startDate)
+  //     console.log('bad');
+  //     return null;
+  // }
 }

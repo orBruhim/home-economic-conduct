@@ -11,25 +11,25 @@ import { IncomeService } from './income.service';
   styleUrls: ['./incomes.component.scss']
 })
 export class IncomesComponent implements OnInit, OnDestroy {
-  title: string ='';
-  form= new FormGroup ({});
-  incomes:Income[] =[];
-  newIncome: Income = {title: '', sum:0};
+  title: string = '';
+  form = new FormGroup({});
+  incomes: Income[] = [];
+  newIncome: Income = { title: '', sum: 0 };
   totalIncomes: number = 0;
   subscription: Subscription | null = null;
 
   constructor(private dataStorageService: DataStorageService,
-              private incomeService: IncomeService) { }
+    private incomeService: IncomeService) { }
 
   ngOnInit(): void {
-    this.form = new FormGroup ({
-      title: new FormControl ('', Validators.required),
-      sum: new FormControl ('', [Validators.required, Validators.pattern("^[0-9]*$")]),
+    this.form = new FormGroup({
+      title: new FormControl('', Validators.required),
+      sum: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$")]),
     });
-    this.incomes= this.incomeService.getIncomes();
-    this.incomeService.incomeChanged$.subscribe ((incomes: Income[]) => {
-      this.incomes= incomes;
-      this.totalIncomes = this.incomeService.returnSum();    
+    this.incomes = this.incomeService.getIncomes();
+    this.incomeService.incomeChanged$.subscribe((incomes: Income[]) => {
+      this.incomes = incomes;
+      this.totalIncomes = this.incomeService.returnSum();
 
     });
 
@@ -37,23 +37,22 @@ export class IncomesComponent implements OnInit, OnDestroy {
   onSubmit() {
     let incomeTitle: string = this.form.value.title;
     let incomeSum: number = +this.form.value.sum;
-    this.newIncome = {title: incomeTitle,sum: incomeSum};
+    this.newIncome = { title: incomeTitle, sum: +incomeSum };
     this.incomeService.addIncome(this.newIncome);
-    this.subscription= this.incomeService.incomeChanged$.subscribe ((incomes: Income[]) => {
-      this.incomes= incomes;
+    this.subscription = this.incomeService.incomeChanged$.subscribe((incomes: Income[]) => {
+      this.incomes = incomes;
     });
-    this.subscription= this.dataStorageService.storeIncomes().subscribe ();
+    this.subscription = this.dataStorageService.storeIncomes().subscribe();
     this.form.reset();
   }
   onDelete(income: Income) {
     this.incomeService.deleteIncome(income);
-    this.subscription= this.incomeService.incomeChanged$.subscribe ((incomes: Income[]) => {
-      this.incomes= incomes;
+    this.subscription = this.incomeService.incomeChanged$.subscribe((incomes: Income[]) => {
+      this.incomes = incomes;
     });
-    this.subscription= this.dataStorageService.storeIncomes().subscribe ();
-    // this.totalIncomes = this.totalIncomes- this.newIncome.sum;  
+    this.subscription = this.dataStorageService.storeIncomes().subscribe();
   }
-  ngOnDestroy () {
+  ngOnDestroy() {
     this.subscription?.unsubscribe();
   }
 }

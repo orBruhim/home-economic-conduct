@@ -4,12 +4,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import {MatToolbarModule} from '@angular/material/toolbar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { BillsComponent } from './bills/bills.component';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
-import {MatListModule} from '@angular/material/list';
-import {MatExpansionModule} from '@angular/material/expansion';
+import { MatListModule } from '@angular/material/list';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { BillsModule } from './bills/bills.module';
 import { BillsRoutingModule } from './bills/bills-routing.module';
 import { BillEditComponent } from './bill-edit/bill-edit.component';
@@ -30,14 +30,14 @@ import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
-    AppComponent    
+    AppComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-   
+
     AppRoutingModule,
-    
+
     MatToolbarModule,
     ReactiveFormsModule,
     ChartsModule,

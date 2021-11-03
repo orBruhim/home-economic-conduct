@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NewBillComponent } from './new-bill.component';
 
 const routes: Routes = [
-  {path: '', component: NewBillComponent}
+  { path: '', component: NewBillComponent }
 ];
 
 @NgModule({

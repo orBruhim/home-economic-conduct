@@ -6,49 +6,53 @@ import { Income } from '../income.interface';
   providedIn: 'root'
 })
 export class IncomeService {
-  incomes: Income [] =[
-    {title: 'or',
-      sum: 20},
-      {title: 'orrrr',
-      sum: 20}
+  incomes: Income[] = [
+    // {
+    //   title: 'or',
+    //   sum: 20
+    // },
+    // {
+    //   title: 'orrrr',
+    //   sum: 20
+    // }
   ];
-  sum: number =0;
-  incomeChanged$: BehaviorSubject <Income[]> =
-   new BehaviorSubject <Income[]> (this.incomes);
+  sum: number = 0;
+  incomeChanged$: BehaviorSubject<Income[]> =
+    new BehaviorSubject<Income[]>(this.incomes);
 
-   getIncomes () {
-       return this.incomes.slice();           
-   }
-   deleteIncome (income: Income) {
+  getIncomes() {
+    return this.incomes.slice();
+  }
+  deleteIncome(income: Income) {
     this.incomes = this.incomes.filter(item => item !== income);
     this.incomeChanged$.next(this.incomes.slice());
-   }
+  }
 
-   addIncome (income: Income) {
-       this.incomes.push(income);
-       this.incomeChanged$.next(this.incomes.slice());
-   }
-   setIncomes (incomes: Income[]) {
-       this.incomes= incomes;
-       this.incomeChanged$.next(this.incomes);
-   }
-   returnSums() {
+  addIncome(income: Income) {
+    this.incomes.push(income);
+    this.incomeChanged$.next(this.incomes.slice());
+  }
+  setIncomes(incomes: Income[]) {
+    this.incomes = incomes;
+    this.incomeChanged$.next(this.incomes);
+  }
+  returnSums() {
     const sumsArray = [];
-    for(let i = 0; i < this.incomes.length; i++)
-    sumsArray[i]= this.incomes[i].sum;
+    for (let i = 0; i < this.incomes.length; i++)
+      sumsArray[i] = this.incomes[i].sum;
     return sumsArray;
-}
+  }
   returnTitles() {
     const titleArray = [];
-    for(let i = 0; i < this.incomes.length; i++) {
-    titleArray[i]= this.incomes[i].title;
+    for (let i = 0; i < this.incomes.length; i++) {
+      titleArray[i] = this.incomes[i].title;
     }
     return titleArray;
   }
-  returnSum () {
-    this.sum=0;
-     for(let i = 0; i < this.incomes.length; i++)
-     this.sum = this.sum + this.incomes[i].sum;
-     return this.sum;   
-}
+  returnSum() {
+    this.sum = 0;
+    for (let i = 0; i < this.incomes.length; i++)
+      this.sum = +this.sum + this.incomes[i].sum;
+    return +this.sum;
+  }
 }

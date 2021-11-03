@@ -6,18 +6,18 @@ import { SummaryRoutingModule } from './summary-routing.module';
 import { ChartsModule } from 'ng2-charts';
 import { FormsModule } from '@angular/forms';
 
-import { 
-	IgxPieChartModule,
-	IgxLegendModule,
-	IgxItemLegendModule,
-  
- } from "igniteui-angular-charts";
+import {
+  IgxPieChartModule,
+  IgxLegendModule,
+  IgxItemLegendModule,
+
+} from "igniteui-angular-charts";
 import { SummaryComponent } from './summary.component';
 
 
- 
+
 @NgModule({
-  
+
 
   declarations: [SummaryComponent],
   imports: [
@@ -30,7 +30,7 @@ import { SummaryComponent } from './summary.component';
     ChartsModule
 
   ],
-  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 
 })
 export class SummaryModule { }

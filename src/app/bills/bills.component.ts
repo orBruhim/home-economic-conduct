@@ -10,37 +10,37 @@ import { BillsService } from './bills.service';
   templateUrl: './bills.component.html',
   styleUrls: ['./bills.component.scss']
 })
-export class BillsComponent implements OnInit, OnDestroy{
+export class BillsComponent implements OnInit, OnDestroy {
 
-  bills: Bill[] =[];
-  sum =0;
+  bills: Bill[] = [];
+  sum = 0;
   subscription: Subscription | null = null;
   constructor(private billsService: BillsService,
-              private router: Router,
-              private dataStorageService: DataStorageService) {}
+    private router: Router,
+    private dataStorageService: DataStorageService) { }
 
   ngOnInit() {
     this.bills = this.billsService.getBills();
-    this.subscription= this.billsService.billsChanged$
-    .subscribe (
-      (bills: Bill[]) => {
-      this.bills = bills;
-      this.sum= this.billsService.returnSum(); 
-    }
-    );
-      
+    this.subscription = this.billsService.billsChanged$
+      .subscribe(
+        (bills: Bill[]) => {
+          this.bills = bills;
+          this.sum = this.billsService.returnSum();
+        }
+      );
+
   }
 
-  onDelete(bill:Bill) {
+  onDelete(bill: Bill) {
     this.billsService.deleteBill(bill);
-    this.subscription = this.billsService.billsChanged$.subscribe ((bills: Bill[]) => 
-      this.bills= bills);
-    this.subscription= this.dataStorageService.storeBills().subscribe ();
+    this.subscription = this.billsService.billsChanged$.subscribe((bills: Bill[]) =>
+      this.bills = bills);
+    this.subscription = this.dataStorageService.storeBills().subscribe();
 
-}
-navigateToAddNewBill() {
-  this.router.navigate(['/header/new-bill'])
-}
+  }
+  navigateToAddNewBill() {
+    this.router.navigate(['/new-bill'])
+  }
 
   ngOnDestroy() {
     this.subscription?.unsubscribe();

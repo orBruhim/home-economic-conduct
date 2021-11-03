@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HeaderRoutingModule } from './header-routing.module';
 import { HeaderComponent } from './header.component';
 
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 
@@ -17,7 +17,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     HeaderRoutingModule,
     MatTabsModule,
     MatToolbarModule
-    
+
   ]
 })
 export class HeaderModule { }

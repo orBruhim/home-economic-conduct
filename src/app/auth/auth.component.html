@@ -1,36 +1,30 @@
-<div class= "wrapper">
-    <form (ngSubmit) = "onSubmit()" #authForm= "ngForm">
+<div class="wrapper">
+    <form (ngSubmit)="onSubmit(SignUpForm)" #SignUpForm="ngForm">
         <mat-form-field appearance="fill">
             <mat-label>
-            Email</mat-label>
-            <input matInput id="email" name= "email" type= "email"
-             ngModel required email #email= "ngModel">
-            <small
-            class="error"
-            *ngIf="!email.valid && email.touched">
-            please enter a valid email
+                Email</mat-label>
+            <input matInput id="email" name="email" type="email" ngModel required email #email="ngModel">
+            <small class="error" *ngIf="!email.valid && email.touched">
+                please enter a valid email
             </small>
         </mat-form-field>
         <br>
         <mat-form-field appearance="fill">
             <mat-label>
-            Password</mat-label>
-            <input matInput name= "password" type= "password"
-            ngModel required #password = "ngModel">
-            <small
-            class="error"
-            *ngIf="!password.valid && password.touched">
-            please enter a password
+                Password</mat-label>
+            <input matInput name="password" type="password" ngModel required #password="ngModel">
+            <small class="error" *ngIf="!password.valid && password.touched">
+                please enter a password
             </small>
         </mat-form-field>
         <br>
-        <button mat-raised-button color="primary"
-        type= "submit"
-        [disabled]= !authForm.valid>
-        {{ isLogin ? 'Login' : 'Sign up'}} </button>
+        <button mat-raised-button color="primary" type="submit" [disabled]=!SignUpForm.valid>
+            {{ isLoginMode ? 'Login' : 'Sign up'}} </button>
         |
-        <button mat-raised-button color="primary" type= "button" (click)= "onSwitchMode()">
-            {{isLogin ? 'switch to sign up' : 'switch to login'}} </button>
+        <button mat-raised-button color="primary" type="button" (click)="onSwitchMode()">
+            {{isLoginMode ? 'switch to sign up' : 'switch to login'}} </button>
+        <br>
+        <p *ngIf="error">{{error}}</p>
     </form>
 </div>
 
