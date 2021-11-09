@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "home-economic--conduct": {
+      "hosting": {
+        "homeEconomicConduct": [
+          "home-economic--conduct"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "home-economic--conduct"
+  }
+}

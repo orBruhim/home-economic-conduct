@@ -33,8 +33,7 @@ export class DataStorageService {
       return combineLatest([this.authService.user$, this.billsQuery.selectBills$]).pipe(
         switchMap(([user, bills]) => {
           debugger
-          return this.http.put('https://home-economic--conduct-default-rtdb.firebaseio.com/bills.json?auth='
-            + user.token, bills)
+          return this.http.put('https://home-economic--conduct-default-rtdb.firebaseio.com/bills.json?auth=',{})
         }),
         take(1),
       );
@@ -45,9 +44,7 @@ export class DataStorageService {
   fetchBills() {
     return this.authService.user$.pipe(take(1), switchMap(user => {
       return this.http.get<Bill[]>
-        ('https://home-economic--conduct-default-rtdb.firebaseio.com/bills.json?auth='
-          + user.token
-        )
+        ('https://home-economic--conduct-default-rtdb.firebaseio.com/bills.json?auth=')
     }),
       tap(bills => {
         this.billsService.setBills(bills);
@@ -59,7 +56,7 @@ export class DataStorageService {
     return this.authService.user$.pipe(take(1), switchMap(user => {
       return this.http.put
         ('https://home-economic--conduct-default-rtdb.firebaseio.com/incomes.json?auth='
-          + user.token, incomes
+          , incomes
         )
     }),
     );
@@ -68,7 +65,7 @@ export class DataStorageService {
     return this.authService.user$.pipe(take(1), switchMap(user => {
       return this.http.get<Income[]>
         ('https://home-economic--conduct-default-rtdb.firebaseio.com/incomes.json?auth='
-          + user.token
+     
         )
     }),
       tap(incomes => {

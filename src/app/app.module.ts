@@ -17,6 +17,10 @@ import { ChartsModule } from 'ng2-charts';
 import { AuthModule } from './auth/auth.module';
 import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { environment } from '../environments/environment';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { provideAuth,getAuth } from '@angular/fire/auth';
+import { provideDatabase,getDatabase } from '@angular/fire/database';
+import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 
 
 
@@ -41,7 +45,11 @@ import { environment } from '../environments/environment';
     IncomesModule,
     SummaryModule,
     AuthModule,
-    environment.production ? [] : AkitaNgDevtools.forRoot({name: 'store', maxAge: 25})
+    environment.production ? [] : AkitaNgDevtools.forRoot({name: 'store', maxAge: 25}),
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
+    provideDatabase(() => getDatabase()),
+    provideFirestore(() => getFirestore())
   ],
   providers: [],
   bootstrap: [AppComponent]

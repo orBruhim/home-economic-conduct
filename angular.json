@@ -109,6 +109,16 @@
               "src/**/*.html"
             ]
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "homeEconomicConduct:build:production",
+            "firebaseProject": "home-economic--conduct",
+            "firebaseHostingSite": "home-economic--conduct"
+          }
         }
       }
     }

@@ -46,8 +46,8 @@ export class NewBillComponent implements OnInit, OnDestroy {
     let payment = this.form.value.payment;
     const newBill: Bill = { id, title, sum, startDate, endDate, payment };
     this.billsService.addBill(newBill);
-    this.billsService.billsChanged$.subscribe((bills: Bill[]) =>
-      this.bills = bills);
+    // this.billsService.billsChanged$.subscribe((bills: Bill[]) =>
+    //   this.bills = bills);
     this.dataStorageService.storeBills().subscribe((response) =>
       console.log(response)
     );
