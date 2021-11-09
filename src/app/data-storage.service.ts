@@ -6,6 +6,8 @@ import { Bill } from './bill.interface';
 import { IncomeService } from './incomes/income.service';
 import { Income } from './income.interface';
 import { AuthService } from './auth/auth.service';
+import { combineLatest } from 'rxjs';
+import { BillsQuery } from './bills/sotre/bills.query';
 
 
 
@@ -14,23 +16,27 @@ import { AuthService } from './auth/auth.service';
 })
 export class DataStorageService {
 
-  constructor(private billsService: BillsService,
+  constructor(
+    private billsService: BillsService,
     private incomeService: IncomeService,
     private http: HttpClient,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private billsQuery: BillsQuery
+  ) { }
 
 
   storeBills() {
     // const bills = this.billsService.getBills();
     // return this.http.put('https://home-economic--conduct-default-rtdb.firebaseio.com/bills.json', bills);
     {
-      const bills = this.billsService.getBills();
-      return this.authService.user$.pipe(take(1), switchMap(user => {
-        return this.http.put
-          ('https://home-economic--conduct-default-rtdb.firebaseio.com/bills.json?auth='
-            + user.token, bills
-          )
-      }),
+      const bills = null;
+      return combineLatest([this.authService.user$, this.billsQuery.selectBills$]).pipe(
+        switchMap(([user, bills]) => {
+          debugger
+          return this.http.put('https://home-economic--conduct-default-rtdb.firebaseio.com/bills.json?auth='
+            + user.token, bills)
+        }),
+        take(1),
       );
     }
 
@@ -48,8 +54,7 @@ export class DataStorageService {
       }));
   }
   storeIncomes() {
-    // const incomes = this.incomeService.getIncomes();
-    // return this.http.put('https://home-economic--conduct-default-rtdb.firebaseio.com/incomes.json', incomes);
+
     const incomes = this.incomeService.getIncomes();
     return this.authService.user$.pipe(take(1), switchMap(user => {
       return this.http.put

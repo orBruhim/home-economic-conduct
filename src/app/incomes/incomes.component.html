@@ -37,9 +37,9 @@
     <button mat-raised-button color="primary" type="submit" (click)="onSubmit()" [disabled]=!this.form.valid>
         Add income</button>
     <br>
-    <h2 *ngIf="incomes.length>0"> Your incomes:</h2>
+    <!-- <h2 *ngIf="incomes.length>0"> Your incomes:</h2> -->
     <br>
-    <mat-expansion-panel hideToggle *ngFor="let income of incomes">
+    <mat-expansion-panel hideToggle *ngFor="let income of (incomes$ |async)">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 <b>

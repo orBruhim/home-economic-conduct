@@ -3,9 +3,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { throwToolbarMixedModesError } from '@angular/material/toolbar';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Bill } from '../bill.interface';
-import { BillsService } from '../bills/bills.service';
-import { DataStorageService } from '../data-storage.service';
+import { Bill } from '../../bill.interface';
+import { BillsService } from '../bills.service';
+import { DataStorageService } from '../../data-storage.service';
 
 @Component({
   selector: 'app-new-bill',
@@ -45,7 +45,6 @@ export class NewBillComponent implements OnInit, OnDestroy {
     let endDate = this.form.value.endDate;
     let payment = this.form.value.payment;
     const newBill: Bill = { id, title, sum, startDate, endDate, payment };
-
     this.billsService.addBill(newBill);
     this.billsService.billsChanged$.subscribe((bills: Bill[]) =>
       this.bills = bills);

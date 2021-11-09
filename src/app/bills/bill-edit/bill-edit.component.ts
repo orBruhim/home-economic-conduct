@@ -3,9 +3,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Bill } from '../bill.interface';
-import { BillsService } from '../bills/bills.service';
-import { DataStorageService } from '../data-storage.service';
+import { Bill } from '../../bill.interface';
+import { BillsService } from '../bills.service';
+import { DataStorageService } from '../../data-storage.service';
 
 @Component({
   selector: 'app-bill-edit',
@@ -32,10 +32,9 @@ export class BillEditComponent implements OnInit, OnDestroy {
       .subscribe(
         (params: Params) => {
           this.id = +params.id;
-          this.bill = this.billsService.getBill(this.id);
-        }
+          this.billsService.getBill(this.id);
+        }      
       );
-
 
     this.form = new FormGroup({
       title: new FormControl(this.bill.title, Validators.required),
@@ -44,7 +43,6 @@ export class BillEditComponent implements OnInit, OnDestroy {
       endDate: new FormControl(this.bill.endDate, Validators.required),
       payment: new FormControl(this.bill.payment, Validators.required)
     }
-      // , this.startDateCannotBeLessThanEndDateValidator(this.form)
     );
 
 
@@ -64,18 +62,4 @@ export class BillEditComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription?.unsubscribe();
   }
-
-  //   startDateCannotBeLessThanEndDateValidator(formGroup: FormGroup) {
-  //     let startDate = formGroup.get("startDate");   
-  //     let endDate = formGroup.get("endDate");
-  //     if(endDate!= null && startDate!= null && endDate >= startDate ) {
-  //       console.log('goood');
-  //       return null;
-
-  //     }
-  //     else
-  //     console.log(endDate, startDate)
-  //     console.log('bad');
-  //     return null;
-  // }
 }

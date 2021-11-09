@@ -5,26 +5,18 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { BillsComponent } from './bills/bills.component';
-import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
-import { MatListModule } from '@angular/material/list';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { BillsModule } from './bills/bills.module';
-import { BillsRoutingModule } from './bills/bills-routing.module';
-import { BillEditComponent } from './bill-edit/bill-edit.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NewBillModule } from './new-bill/new-bill.module';
-import { HeaderComponent } from './header/header.component';
-import { BillEditModule } from './bill-edit/bill-edit.module';
+import { NewBillModule } from './bills/new-bill/new-bill.module';
+import { BillEditModule } from './bills/bill-edit/bill-edit.module';
 import { HeaderModule } from './header/header.module';
 import { IncomesModule } from './incomes/incomes.module';
-import { NotFoundComponent } from './not-found/not-found.component';
-import { SummaryComponent } from './summary/summary.component';
 import { SummaryModule } from './summary/summary.module';
 import { ChartsModule } from 'ng2-charts';
-import { AuthComponent } from './auth/auth.component';
 import { AuthModule } from './auth/auth.module';
+import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
+import { environment } from '../environments/environment';
 
 
 
@@ -48,7 +40,8 @@ import { AuthModule } from './auth/auth.module';
     HeaderModule,
     IncomesModule,
     SummaryModule,
-    AuthModule
+    AuthModule,
+    environment.production ? [] : AkitaNgDevtools.forRoot({name: 'store', maxAge: 25})
   ],
   providers: [],
   bootstrap: [AppComponent]

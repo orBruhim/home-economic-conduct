@@ -26,7 +26,7 @@ export class AuthService {
       .pipe
       (
         tap(resData => {
-          console.log(this.user$);
+          this.user$.next({ email: email, id: password, token: 'By49g23DuqObdBwEayqIz1VHtupEmI2QlonuFoIN' });
         }
         ));
   }
@@ -40,7 +40,7 @@ export class AuthService {
       .pipe
       (
         tap(resData => {
-          console.log(this.user$);
+          this.user$.next({ email: email, id: password, token: 'By49g23DuqObdBwEayqIz1VHtupEmI2QlonuFoIN' });
         }
         )
       );

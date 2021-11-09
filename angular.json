@@ -115,6 +115,6 @@
   },
   "defaultProject": "homeEconomicConduct",
   "cli": {
-    "defaultCollection": "@angular-eslint/schematics"
+    "defaultCollection": "@datorama/akita"
   }
 }

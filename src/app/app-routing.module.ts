@@ -13,7 +13,7 @@ const appRoutes: Routes = [
         ).then(m => m.AuthModule)
     },
     {
-        path: '', component: HeaderComponent,canActivate: [AuthGuard], children: [
+        path: '', component: HeaderComponent, children: [
             {
                 path: 'incomes', loadChildren: () => import(
                     './incomes/incomes.module'
@@ -31,12 +31,12 @@ const appRoutes: Routes = [
             },
             {
                 path: 'new-bill', loadChildren: () => import(
-                    './new-bill/new-bill.module'
+                    './bills/new-bill/new-bill.module'
                 ).then(m => m.NewBillModule)
             },
             {
                 path: 'bill-edit/:id', loadChildren: () => import(
-                    './bill-edit/bill-edit.module'
+                    './bills/bill-edit/bill-edit.module'
                 ).then(m => m.BillEditModule)
             }
         ]
