@@ -1,9 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { Bill } from "../bill.interface";
-import { BillsQuery } from "./sotre/bills.query";
 import { BillsState, BillsStore } from "./sotre/bills.store";
-import { map } from "rxjs/operators";
 
 @Injectable({ providedIn: 'root' })
 
@@ -71,28 +69,9 @@ export class BillsService {
     sum: number = 0;
     billsChanged$: BehaviorSubject<Bill[]> =
         new BehaviorSubject<Bill[]>(this.bills);
-    constructor(private billsStore: BillsStore,
-        private billsQuery: BillsQuery) { }
-
-    // getBills() {
-    //     this.billsStore.update((billsState: BillsState) => {
-    //         return {
-    //             ...billsState, bills: [...this.bills]
-    //         };
-    //     });
-    // }
+    constructor(private billsStore: BillsStore) { }
 
     getBill(id: number) {
-        // return this.bills[id];
-        // this.billsStore.update((billsState: BillsState) => {
-        // return {
-        //     ...billsState, bills: [...billsState.bills , this.bills[id]]
-        // };
-        //     const getedBill = billsState.bills[id];
-        //     return {
-        //         ...billsState, getedBill
-        //     }
-        // });
         this.billsStore.update((billsState: BillsState) => {
             const billGet = billsState.bills[id]
             console.log(billGet);
@@ -102,15 +81,7 @@ export class BillsService {
         });
     }
     setBill(id: number, bill: Bill) {
-        // this.bills[id] = bill;
-        // this.billsChanged$.next(this.bills.slice());
-        // this.billsStore.update((billsState: BillsState) => {
-        //     const bills = billsState.bills;
-        //     bills[id] = bill;
-        //     return {
-        //         ...billsState, bills
-        //     }
-        // });
+      console.log(bill)
         this.billsStore.update((billsState: BillsState) => {
             const bill = billsState.bills[id];
             const updatedBill = { ...bill, id };
@@ -123,8 +94,6 @@ export class BillsService {
     }
 
     deleteBill(bill: Bill) {
-        // this.bills = this.bills.filter(item => item !== bill);
-        // this.billsChanged$.next(this.bills.slice());
         this.billsStore.update((billsState: BillsState) => {
             const bills = billsState.bills.filter(item => item !== bill)
             return {
@@ -134,8 +103,6 @@ export class BillsService {
     }
 
     addBill(bill: Bill) {
-        // this.bills.push(bill);
-        // this.billsChanged$.next(this.bills.slice());
         this.billsStore.update((billsState: BillsState) => {
             return {
                 ...billsState, bills: [...billsState.bills, bill]
@@ -145,15 +112,7 @@ export class BillsService {
 
 
     setBills(bills: Bill[]) {
-        // this.bills = bills;
-        // this.billsChanged$.next(this.bills);
-        // this.billsStore.update((billsState: BillsState) => {
-        //     return {
-        //         ...billsState, bills: [...bills]
-        //     };
-        // });
         this.billsStore.update((billsState: BillsState) => {
-            console.log(bills);
             return {
                 ...billsState, bills
             }

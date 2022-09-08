@@ -125,6 +125,7 @@
   },
   "defaultProject": "homeEconomicConduct",
   "cli": {
+    "analytics": false,
     "defaultCollection": "@datorama/akita"
   }
 }

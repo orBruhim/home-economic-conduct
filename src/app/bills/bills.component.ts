@@ -26,17 +26,8 @@ export class BillsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // this.billsService.getBills();
-    // this.subscription = this.billsService.billsChanged$
-    //   .subscribe(
-    //     (bills: Bill[]) => {
-    //       this.bills = bills;
-    //       this.sum = this.billsService.returnSum();
-    //     }
-    //   );
     this.bills$ = this.billsQuery.selectBills$;    
     this.sum = this.billsService.returnSum();
-    console.log(this.bills$);
   }
 
   onDelete(bill: Bill) {

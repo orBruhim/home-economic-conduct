@@ -21,6 +21,7 @@ import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideDatabase,getDatabase } from '@angular/fire/database';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import {MatIconModule} from "@angular/material/icon";
 
 
 
@@ -28,29 +29,30 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
   declarations: [
     AppComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
 
-    AppRoutingModule,
+        AppRoutingModule,
 
-    MatToolbarModule,
-    ReactiveFormsModule,
-    ChartsModule,
+        MatToolbarModule,
+        ReactiveFormsModule,
+        ChartsModule,
 
-    NewBillModule,
-    BillsModule,
-    BillEditModule,
-    HeaderModule,
-    IncomesModule,
-    SummaryModule,
-    AuthModule,
-    environment.production ? [] : AkitaNgDevtools.forRoot({name: 'store', maxAge: 25}),
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideAuth(() => getAuth()),
-    provideDatabase(() => getDatabase()),
-    provideFirestore(() => getFirestore())
-  ],
+        NewBillModule,
+        BillsModule,
+        BillEditModule,
+        HeaderModule,
+        IncomesModule,
+        SummaryModule,
+        AuthModule,
+        environment.production ? [] : AkitaNgDevtools.forRoot({name: 'store', maxAge: 25}),
+        provideFirebaseApp(() => initializeApp(environment.firebase)),
+        provideAuth(() => getAuth()),
+        provideDatabase(() => getDatabase()),
+        provideFirestore(() => getFirestore()),
+        MatIconModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
