@@ -3,9 +3,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { throwToolbarMixedModesError } from '@angular/material/toolbar';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Bill } from '../../bill.interface';
-import { BillsService } from '../bills.service';
-import { DataStorageService } from '../../data-storage.service';
+import { BillsFacade } from '../sotre/bills.facade';
+import { DataStorageService } from '../../../data-storage.service';
+import { BillsService } from '../sotre/bills.service';
+import { Bill } from '../bill.interface';
 
 @Component({
   selector: 'app-new-bill',
@@ -19,24 +20,32 @@ export class NewBillComponent implements OnInit, OnDestroy {
   id: number = 0;
   subscription: Subscription | null = null;
 
-  constructor(private billsService: BillsService,
+  constructor(
+    private billsFacade: BillsFacade,
     private router: Router,
-    private dataStorageService: DataStorageService) { }
+    private dataStorageService: DataStorageService,
+    private billsService: BillsService
+  ) {}
 
   ngOnInit(): void {
     this.form = new FormGroup({
       title: new FormControl('', Validators.required),
-      sum: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$")]),
+      sum: new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[0-9]*$')
+      ]),
       startDate: new FormControl('', [Validators.required]),
       endDate: new FormControl('', Validators.required),
       payment: new FormControl('', Validators.required)
     });
-    this.subscription = this.billsService.billsChanged$.subscribe((bills: Bill[]) => {
-      this.bills = bills;
-      this.id = this.bills.length;
-
-    })
+    this.subscription = this.billsFacade.billsChanged$.subscribe(
+      (bills: Bill[]) => {
+        this.bills = bills;
+        this.id = this.bills.length;
+      }
+    );
   }
+
   onSubmit() {
     let id = this.id + 1;
     let title = this.form.value.title;
@@ -45,13 +54,11 @@ export class NewBillComponent implements OnInit, OnDestroy {
     let endDate = this.form.value.endDate;
     let payment = this.form.value.payment;
     const newBill: Bill = { id, title, sum, startDate, endDate, payment };
-    this.billsService.addBill(newBill);
-    // this.billsService.billsChanged$.subscribe((bills: Bill[]) =>
+    this.billsFacade.addBill(newBill);
+    // this.billsFacade.billsChanged$.subscribe((bills: Bill[]) =>
     //   this.bills = bills);
-    this.dataStorageService.storeBills().subscribe((response) =>
-      console.log(response)
-    );
-    this.router.navigate(['/bills'])
+    this.billsService.postsBills().subscribe(response => console.log(response));
+    this.router.navigate(['/bills']);
   }
 
   ngOnDestroy() {

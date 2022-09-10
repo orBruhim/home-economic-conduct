@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
-import { DataStorageService } from '../data-storage.service';
-import { Income } from '../income.interface';
+import { DataStorageService } from '../../data-storage.service';
+import { Income } from '../../income.interface';
 import { IncomeService } from './income.service';
 import { IncomeQuery } from './store/incomes.query';
 

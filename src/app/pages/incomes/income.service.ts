@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Income } from '../income.interface';
+import { Income } from '../../income.interface';
 import { IncomeState, IncomeStore } from './store/incomes.store';
 
 @Injectable({
