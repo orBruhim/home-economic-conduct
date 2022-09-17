@@ -2,26 +2,15 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { BillsState, BillsStore } from './bills.store';
 import { Bill } from '../bill.interface';
-import { BillsQuery } from './bills.query';
-import { tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class BillsFacade {
   billsChanged$ = new BehaviorSubject<Bill[]>([]);
-  bills = [];
 
-  constructor(private billsStore: BillsStore, private billsQuery: BillsQuery) {
-    this.billsQuery.selectBills$
-      .pipe(
-        tap((bills: Bill[]) => {
-          this.bills = bills;
-        })
-      )
-      .subscribe();
-  }
+  constructor(private billsStore: BillsStore) {}
 
-  getBill(id: string): Bill {
-    return this.bills.find(bill => bill.id === id);
+  getBill(bills: Bill[], id: string): Bill {
+    return bills.find(bill => bill.id === id);
   }
 
   setBill(updatedBill: Bill): void {
@@ -71,27 +60,17 @@ export class BillsFacade {
     });
   }
 
-  //
-  // getSum(): number {
-  //   let totalSum = 0;
-  //   this.bills.forEach(bill => {
-  //     debugger;
-  //     totalSum = +bill.sum;
-  //   });
-  //   return totalSum;
-  // }
-
-  getSumsArray(): number[] {
+  getSumsArray(bills: Bill[]): number[] {
     const sumsArray = [];
-    this.bills.forEach(bill => {
+    bills.forEach(bill => {
       sumsArray.push(bill.sum);
     });
     return sumsArray;
   }
 
-  getTitlesArray(): string[] {
+  getTitlesArray(bills: Bill[]): string[] {
     const titleArray = [];
-    this.bills.forEach(bill => {
+    bills.forEach(bill => {
       titleArray.push(bill.title);
     });
     return titleArray;

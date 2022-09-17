@@ -5,6 +5,8 @@ import { Subscription } from 'rxjs';
 import { BillsFacade } from '../sotre/bills.facade';
 import { BillsService } from '../sotre/bills.service';
 import { Bill } from '../bill.interface';
+import { tap } from 'rxjs/operators';
+import { BillsQuery } from '../sotre/bills.query';
 
 @Component({
   selector: 'app-bill-edit',
@@ -38,14 +40,22 @@ export class BillEditComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private billsFacade: BillsFacade,
     private billsService: BillsService,
-    private router: Router
+    private router: Router,
+    private billsQuery: BillsQuery
   ) {}
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params.id;
     this.subscription = this.route.params.subscribe((params: Params) => {
       this.id = params.id;
-      this.billsFacade.getBill(this.id);
+
+      this.billsQuery.selectBills$
+        .pipe(
+          tap((bills: Bill[]) => {
+            this.billsFacade.getBill(bills, this.id);
+          })
+        )
+        .subscribe();
     });
 
     this.form = new FormGroup({

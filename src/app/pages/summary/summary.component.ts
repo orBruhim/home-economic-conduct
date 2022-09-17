@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import * as Chart from 'chart.js';
-import { ChartType, ChartOptions } from 'chart.js';
+import {ChartType, ChartOptions} from 'chart.js';
 
 import {
   SingleDataSet,
@@ -8,12 +8,12 @@ import {
   monkeyPatchChartJsLegend,
   monkeyPatchChartJsTooltip
 } from 'ng2-charts';
-import { Subject, Subscription } from 'rxjs';
-import { BillsFacade } from '../bills/sotre/bills.facade';
-import { IncomeService } from '../incomes/income.service';
-import { Bill } from '../bills/bill.interface';
-import { BillsQuery } from '../bills/sotre/bills.query';
-import { takeUntil, tap } from 'rxjs/operators';
+import {Subject, Subscription} from 'rxjs';
+import {BillsFacade} from '../bills/sotre/bills.facade';
+import {IncomeService} from '../incomes/income.service';
+import {Bill} from '../bills/bill.interface';
+import {BillsQuery} from '../bills/sotre/bills.query';
+import {takeUntil, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-summary',
@@ -47,8 +47,7 @@ export class SummaryComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.pieChartDataBills = this.billsFacade.getSumsArray();
-    this.pieChartLabelsBills = this.billsFacade.getTitlesArray();
+
     this.pieChartDataIncomes = this.incomesService.returnSums();
     this.pieChartLabelsIncomes = this.incomesService.returnTitles();
     let sumIncomes = this.incomesService.returnSum();
@@ -58,6 +57,17 @@ export class SummaryComponent implements OnInit, OnDestroy {
         this.sumBills = sum;
       })
     );
+
+    this.billsQuery.selectBills$
+      .pipe(
+        tap((bills: Bill[]) => {
+
+          this.pieChartDataBills = this.billsFacade.getSumsArray(bills);
+          this.pieChartLabelsBills = this.billsFacade.getTitlesArray(bills);
+        })
+      )
+      .subscribe();
+
 
     this.chart = new Chart('canvas', {
       type: 'bar',
