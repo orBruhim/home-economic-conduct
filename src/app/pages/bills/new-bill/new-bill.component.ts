@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { throwToolbarMixedModesError } from '@angular/material/toolbar';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { BillsFacade } from '../sotre/bills.facade';
@@ -17,7 +16,7 @@ export class NewBillComponent implements OnInit, OnDestroy {
   title: string = '';
   form = new FormGroup({});
   bills: Bill[] | undefined;
-  id: number = 0;
+  id = '0';
   subscription: Subscription | null = null;
 
   constructor(
@@ -41,7 +40,7 @@ export class NewBillComponent implements OnInit, OnDestroy {
     this.subscription = this.billsFacade.billsChanged$.subscribe(
       (bills: Bill[]) => {
         this.bills = bills;
-        this.id = this.bills.length;
+        this.id = this.bills.length.toString();
       }
     );
   }
@@ -54,11 +53,14 @@ export class NewBillComponent implements OnInit, OnDestroy {
     let endDate = this.form.value.endDate;
     let payment = this.form.value.payment;
     const newBill: Bill = { id, title, sum, startDate, endDate, payment };
-    this.billsFacade.addBill(newBill);
+    // this.billsFacade.addBill(newBill);
     // this.billsFacade.billsChanged$.subscribe((bills: Bill[]) =>
     //   this.bills = bills);
-    this.billsService.postsBills().subscribe(response => console.log(response));
+    this.billsService
+      .postsBills(newBill)
+      .subscribe(response => console.log(response));
     this.router.navigate(['/bills']);
+    this.billsFacade.addBill(newBill);
   }
 
   ngOnDestroy() {

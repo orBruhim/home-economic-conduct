@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { BillsFacade } from '../sotre/bills.facade';
-import { DataStorageService } from '../../../data-storage.service';
 import { BillsService } from '../sotre/bills.service';
 import { Bill } from '../bill.interface';
 
@@ -14,23 +13,23 @@ import { Bill } from '../bill.interface';
 })
 export class BillEditComponent implements OnInit, OnDestroy {
   bill: Bill = {
-    id: 0,
+    id: '0',
     title: '',
     startDate: new Date(2021, 11, 30),
     endDate: new Date(2021, 11, 30),
     sum: 0,
-    payment: ''
+    payment: 'monthly'
   };
-  id: number = 0;
+  id = '0';
   bills: Bill[] | null = null;
   form: FormGroup = new FormGroup({});
   newBill: Bill = {
-    id: 0,
+    id: '0',
     title: '',
     startDate: new Date(2021, 11, 30),
     endDate: new Date(2021, 11, 30),
     sum: 0,
-    payment: ''
+    payment: 'monthly'
   };
   subscription: Subscription | null = null;
   date: string = '';
@@ -39,14 +38,13 @@ export class BillEditComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private billsFacade: BillsFacade,
     private billsService: BillsService,
-    private router: Router,
-    private dataStorageService: DataStorageService
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.id = +this.route.snapshot.params.id;
+    this.id = this.route.snapshot.params.id;
     this.subscription = this.route.params.subscribe((params: Params) => {
-      this.id = +params.id;
+      this.id = params.id;
       this.billsFacade.getBill(this.id);
     });
 
@@ -70,7 +68,7 @@ export class BillEditComponent implements OnInit, OnDestroy {
     this.newBill.payment = this.form.value.payment;
     this.newBill.id = this.id;
     this.billsFacade.setBill(this.newBill);
-    this.billsService.postsBills().subscribe();
+    this.billsService.postsBills(this.newBill).subscribe();
     // this.dataStorageService.storeBills().subscribe();
     this.router.navigate(['/bills']);
   }

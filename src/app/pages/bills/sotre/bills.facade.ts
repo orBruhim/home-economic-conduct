@@ -2,23 +2,26 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { BillsState, BillsStore } from './bills.store';
 import { Bill } from '../bill.interface';
+import { BillsQuery } from './bills.query';
+import { tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class BillsFacade {
-  bills: Bill[] = [];
-  sum: number = 0;
-  billsChanged$ = new BehaviorSubject<Bill[]>(this.bills);
+  billsChanged$ = new BehaviorSubject<Bill[]>([]);
+  bills = [];
 
-  constructor(private billsStore: BillsStore) {}
+  constructor(private billsStore: BillsStore, private billsQuery: BillsQuery) {
+    this.billsQuery.selectBills$
+      .pipe(
+        tap((bills: Bill[]) => {
+          this.bills = bills;
+        })
+      )
+      .subscribe();
+  }
 
-  getBill(id: number): void {
-    this.billsStore.update((billsState: BillsState) => {
-      const billGet = billsState.bills[id];
-      return {
-        ...billsState,
-        billGet
-      };
-    });
+  getBill(id: string): Bill {
+    return this.bills.find(bill => bill.id === id);
   }
 
   setBill(updatedBill: Bill): void {
@@ -43,7 +46,8 @@ export class BillsFacade {
       const bills = billsState.bills.filter(item => item !== bill);
       return {
         ...billsState,
-        bills
+        bills,
+        sum: billsState.sum - bill.sum
       };
     });
   }
@@ -52,7 +56,8 @@ export class BillsFacade {
     this.billsStore.update((billsState: BillsState) => {
       return {
         ...billsState,
-        bills: [...billsState.bills, bill]
+        bills: [...billsState.bills, bill],
+        sum: billsState.sum + bill.sum
       };
     });
   }
@@ -66,13 +71,15 @@ export class BillsFacade {
     });
   }
 
-  getSum(): number {
-    this.sum = 0;
-    this.bills.forEach(bill => {
-      this.sum = +bill.sum;
-    });
-    return this.sum;
-  }
+  //
+  // getSum(): number {
+  //   let totalSum = 0;
+  //   this.bills.forEach(bill => {
+  //     debugger;
+  //     totalSum = +bill.sum;
+  //   });
+  //   return totalSum;
+  // }
 
   getSumsArray(): number[] {
     const sumsArray = [];

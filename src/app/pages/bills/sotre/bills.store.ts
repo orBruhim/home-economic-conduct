@@ -4,11 +4,13 @@ import { Bill } from 'src/app/pages/bills/bill.interface';
 
 export interface BillsState {
   bills: Bill[];
+  sum: number;
 }
 
 export function createInitialState(): BillsState {
   return {
-    bills: []
+    bills: [],
+    sum: 0
   };
 }
 

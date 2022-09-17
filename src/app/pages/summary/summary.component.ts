@@ -8,10 +8,12 @@ import {
   monkeyPatchChartJsLegend,
   monkeyPatchChartJsTooltip
 } from 'ng2-charts';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { BillsFacade } from '../bills/sotre/bills.facade';
 import { IncomeService } from '../incomes/income.service';
 import { Bill } from '../bills/bill.interface';
+import { BillsQuery } from '../bills/sotre/bills.query';
+import { takeUntil, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-summary',
@@ -32,10 +34,13 @@ export class SummaryComponent implements OnInit, OnDestroy {
   public pieChartType: ChartType = 'pie';
   public pieChartLegend = true;
   public pieChartPlugins = [];
+  sumBills = 0;
+  private destroySubject = new Subject<void>();
 
   constructor(
     private billsFacade: BillsFacade,
-    private incomesService: IncomeService
+    private incomesService: IncomeService,
+    private billsQuery: BillsQuery
   ) {
     monkeyPatchChartJsTooltip();
     monkeyPatchChartJsLegend();
@@ -47,7 +52,12 @@ export class SummaryComponent implements OnInit, OnDestroy {
     this.pieChartDataIncomes = this.incomesService.returnSums();
     this.pieChartLabelsIncomes = this.incomesService.returnTitles();
     let sumIncomes = this.incomesService.returnSum();
-    let sumBills = this.billsFacade.getSum();
+    this.billsQuery.selectedSum$.pipe(
+      takeUntil(this.destroySubject),
+      tap(sum => {
+        this.sumBills = sum;
+      })
+    );
 
     this.chart = new Chart('canvas', {
       type: 'bar',
@@ -56,7 +66,7 @@ export class SummaryComponent implements OnInit, OnDestroy {
         datasets: [
           {
             label: 'bills',
-            data: [sumBills],
+            data: [this.sumBills],
             backgroundColor: ['rgba(54, 162, 235, 0.2)'],
             borderColor: ['rgba(54, 162, 235, 1)'],
             borderWidth: 3

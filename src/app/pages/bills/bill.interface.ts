@@ -1,8 +1,10 @@
 export interface Bill {
-    id: number;
-    title: string;
-    startDate: Date | string;
-    endDate: Date | string;
-    sum: number;
-    payment?: string
+  id: string;
+  title: string;
+  startDate: Date | string;
+  endDate: Date | string;
+  sum: number;
+  payment?: BillPayment;
 }
+
+export type BillPayment = 'monthly' | 'bi-monthly' | 'weekly' | 'yearly';

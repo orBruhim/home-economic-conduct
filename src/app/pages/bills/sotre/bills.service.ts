@@ -1,50 +1,41 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../auth/auth.service';
-import { switchMap, take, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { BillsFacade } from './bills.facade';
-import { combineLatest } from 'rxjs';
+import { from } from 'rxjs';
 import { BillsQuery } from './bills.query';
 import { Bill } from '../bill.interface';
+import {
+  Firestore,
+  collection,
+  collectionData,
+  addDoc
+} from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BillsService {
+  billsCollection = collection(this.firestore, 'bills');
+
   constructor(
     private http: HttpClient,
     private authService: AuthService,
     private billsFacade: BillsFacade,
-    private billsQuery: BillsQuery
+    private billsQuery: BillsQuery,
+    private firestore: Firestore
   ) {}
 
   getBills() {
-    return this.authService.user$.pipe(
-      take(1),
-      switchMap(user => {
-        console.log(user);
-        return this.http.get<Bill[]>(
-          'https://home-economic--conduct-default-rtdb.firebaseio.com/bills.json?auth='
-        );
-      }),
-      tap((bills: Bill[]) => {
-        console.log(bills);
-        this.billsFacade.setBills(bills);
+    return collectionData(this.billsCollection).pipe(
+      tap(bills => {
+        this.billsFacade.setBills(bills as Bill[]);
       })
     );
   }
 
-  postsBills() {
-    return combineLatest([
-      this.authService.user$,
-      this.billsQuery.selectBills$
-    ]).pipe(
-      tap(([user, bills]) => {
-        return this.http.post(
-          'https://home-economic--conduct-default-rtdb.firebaseio.com/bills.json?auth=',
-          bills
-        );
-      })
-    );
+  postsBills(newBill: Bill) {
+    return from(addDoc(this.billsCollection, newBill));
   }
 }

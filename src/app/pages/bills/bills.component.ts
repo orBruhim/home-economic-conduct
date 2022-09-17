@@ -12,7 +12,7 @@ import { Bill } from './bill.interface';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BillsComponent implements OnInit {
-  sum = this.billsFacade.getSum();
+  sum$ = this.billsQuery.selectedSum$;
   bills$ = this.billsQuery.selectBills$;
 
   constructor(
@@ -22,15 +22,15 @@ export class BillsComponent implements OnInit {
     private billsService: BillsService
   ) {}
 
-  onDelete(bill: Bill) {
+  ngOnInit(): void {
+    this.billsService.getBills().subscribe();
+  }
+
+  deleteBill(bill: Bill): void {
     this.billsFacade.deleteBill(bill);
   }
 
-  navigateToAddNewBill() {
+  navigateToAddNewBill(): void {
     this.router.navigate(['/new-bill']);
-  }
-
-  ngOnInit(): void {
-    this.billsService.getBills().subscribe();
   }
 }
