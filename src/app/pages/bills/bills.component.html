@@ -1,0 +1,35 @@
+<div class="bills-wrapper">
+  <h2>Your Bills:</h2>
+  <div *ngIf="bills$ | async as bills" class="table-wrapper">
+    <mat-expansion-panel *ngFor="let bill of bills" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title class="panel-wrapper">
+          <div class="title-wrapper">
+            {{ bill.title }}
+          </div>
+          - {{ bill.sum | currency }}
+        </mat-panel-title>
+        <div class="actions-wrapper">
+          <button (click)="deleteBill(bill)" color="primary" mat-mini-fab>
+            <mat-icon fontIcon="delete">delete</mat-icon>
+          </button>
+          <a
+            [routerLink]="['/bill-edit', bill.id]"
+            color="primary"
+            mat-mini-fab
+          >
+            <mat-icon fontIcon="edit">edit</mat-icon>
+          </a>
+        </div>
+      </mat-expansion-panel-header>
+      <div class="info-wrapper">
+        <p>{{ bill.startDate | date }} - {{ bill.endDate | date }}</p>
+        <p>Payment method: {{ bill.payment }}</p>
+      </div>
+    </mat-expansion-panel>
+  </div>
+  <button (click)="navigateToAddNewBill()" color="primary" mat-raised-button>
+    Add new bill
+  </button>
+  <h2 *ngIf="sum$ | async as sum">Total outcomes: {{ sum | currency }}</h2>
+</div>

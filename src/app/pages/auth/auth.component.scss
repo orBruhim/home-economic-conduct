@@ -1,0 +1,13 @@
+.wrapper {
+  width: 100vw;
+  margin: auto;
+  display: grid;
+  place-content: end;
+  height: 90vh;
+  justify-content: space-between;
+}
+
+p {
+  margin: auto;
+  color: red;
+}

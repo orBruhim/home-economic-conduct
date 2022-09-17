@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { IncomeService } from './incomes/income.service';
+import { IncomeService } from './pages/incomes/income.service';
 
 
 describe('IncomeService', () => {

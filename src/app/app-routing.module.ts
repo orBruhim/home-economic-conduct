@@ -1,42 +1,40 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, PreloadingStrategy, RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './auth/auth-guard.service';
-import { BillsComponent } from './bills/bills.component';
-import { HeaderComponent } from './header/header.component';
-import { NotFoundComponent } from './not-found/not-found.component';
+import { HeaderComponent } from './pages/header/header.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 const appRoutes: Routes = [
     { path: '', redirectTo: 'bills', pathMatch: 'full' },
     {
         path: 'auth', loadChildren: () => import(
-            './auth/auth.module'
+            './pages/auth/auth.module'
         ).then(m => m.AuthModule)
     },
     {
         path: '', component: HeaderComponent, children: [
             {
                 path: 'incomes', loadChildren: () => import(
-                    './incomes/incomes.module'
+                    './pages/incomes/incomes.module'
                 ).then(m => m.IncomesModule)
             },
             {
                 path: 'summary', loadChildren: () => import(
-                    './summary/summary.module'
+                    './pages/summary/summary.module'
                 ).then(m => m.SummaryModule)
             },
             {
                 path: 'bills', loadChildren: () => import(
-                    './bills/bills.module'
+                    './pages/bills/bills.module'
                 ).then(m => m.BillsModule)
             },
             {
                 path: 'new-bill', loadChildren: () => import(
-                    './bills/new-bill/new-bill.module'
+                    './pages/bills/new-bill/new-bill.module'
                 ).then(m => m.NewBillModule)
             },
             {
                 path: 'bill-edit/:id', loadChildren: () => import(
-                    './bills/bill-edit/bill-edit.module'
+                    './pages/bills/bill-edit/bill-edit.module'
                 ).then(m => m.BillEditModule)
             }
         ]
