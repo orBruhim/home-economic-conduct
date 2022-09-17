@@ -36,6 +36,7 @@ export class BillsService {
   }
 
   postsBills(newBill: Bill) {
+    this.billsFacade.addBill(newBill);
     return from(addDoc(this.billsCollection, newBill));
   }
 }

@@ -1,12 +1,11 @@
+.wrapper {
+  width: 100vw;
+  margin: auto;
+  display: grid;
+  place-content: center;
+  height: 90vh;
+}
 
-    .wrapper {
-        width: 100vw;
-        margin: auto;
-        display: grid;
-        place-content:center;
-        height: 90vh;
-      }
-      h2 {
-        margin:auto
-              }
-  
+h2 {
+  margin: auto;
+}
