@@ -73,6 +73,7 @@ export class BillsFacade {
     bills.forEach(bill => {
       titleArray.push(bill.title);
     });
+    console.log(titleArray);
     return titleArray;
   }
 }

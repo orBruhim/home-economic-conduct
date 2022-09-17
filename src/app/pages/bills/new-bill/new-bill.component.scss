@@ -1,12 +1,23 @@
+.form-wrapper {
+  width: 100vw;
+  margin: auto;
+  place-content: center;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
 
-    .wrapper {
-        width: 100vw;
-        margin: auto;
-        display: grid;
-        place-content:center;
-        height: 90vh;
-      }
-      h2 {
-        margin:auto
-              }
-  
+  h2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 28px;
+  }
+
+  .formField-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
