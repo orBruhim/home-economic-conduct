@@ -15,7 +15,6 @@
         title is required
       </small>
     </mat-form-field>
-    <br />
     <mat-form-field appearance="fill">
       <mat-label>Sum</mat-label>
       <input formControlName="sum" matInput />
@@ -37,20 +36,20 @@
         "
         class="error"
       >
-        sum is a numner
+        sum is a number
       </small>
     </mat-form-field>
-    <br />
+
     <mat-form-field appearance="fill">
       <mat-label>start date</mat-label>
       <input formControlName="startDate" matInput type="date" />
     </mat-form-field>
-    <br />
+
     <mat-form-field appearance="fill">
       <mat-label>End date</mat-label>
       <input formControlName="endDate" matInput type="date" />
     </mat-form-field>
-    <br />
+
     <mat-form-field appearance="fill">
       <mat-label>Payment</mat-label>
       <mat-select formControlName="payment">
@@ -60,7 +59,7 @@
         <mat-option value="yearly">yearly</mat-option>
       </mat-select>
     </mat-form-field>
-    <br />
+
     <button
       [disabled]="!this.form.valid"
       color="primary"

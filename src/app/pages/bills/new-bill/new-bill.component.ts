@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { BillsService } from '../sotre/bills.service';
 import { takeUntil, tap } from 'rxjs/operators';
 import { BillsQuery } from '../sotre/bills.query';
+import { Bill } from '../bill.interface';
 
 @Component({
   selector: 'app-new-bill',
@@ -39,8 +40,15 @@ export class NewBillComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    const { id, title, sum, startDate, endDate, payment } = this.form.value;
-    const newBill = { id, title, sum, startDate, endDate, payment };
+    const { title, sum, startDate, endDate, payment } = this.form.value;
+    const newBill: Bill = {
+      id: this.id,
+      title,
+      sum,
+      startDate,
+      endDate,
+      payment
+    };
 
     this.billsService.postsBills(newBill).subscribe();
     this.router.navigate(['/bills']);
