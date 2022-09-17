@@ -2,9 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { BillsFacade } from '../sotre/bills.facade';
 import { BillsService } from '../sotre/bills.service';
 import { takeUntil, tap } from 'rxjs/operators';
+import { BillsQuery } from '../sotre/bills.query';
 
 @Component({
   selector: 'app-new-bill',
@@ -19,18 +19,22 @@ export class NewBillComponent implements OnInit, OnDestroy {
   private destroySubject = new Subject<void>();
 
   constructor(
-    private billsFacade: BillsFacade,
     private router: Router,
-    private billsService: BillsService
+    private billsService: BillsService,
+    private billsQuery: BillsQuery
   ) {}
 
   ngOnInit(): void {
-    this.billsFacade.billsChanged$.pipe(
-      takeUntil(this.destroySubject),
-      tap(bills => {
-        this.id = bills.length.toString() + 1;
-      })
-    );
+    this.billsService.getBills().subscribe();
+
+    this.billsQuery.selectBills$
+      .pipe(
+        takeUntil(this.destroySubject),
+        tap(bills => {
+          this.id = bills.length.toString() + 1;
+        })
+      )
+      .subscribe();
     this.initForm();
   }
 
